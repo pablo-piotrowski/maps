@@ -3,7 +3,6 @@
 import * as React from "react";
 import Map, { Source, Layer, LayerProps } from "react-map-gl/mapbox-legacy";
 import "mapbox-gl/dist/mapbox-gl.css";
-
 import { INITIAL_VIEW_STATE } from "./mapconfig";
 
 const LocationAggregatorMap = () => {
@@ -11,7 +10,7 @@ const LocationAggregatorMap = () => {
 
   const myVectorTilesetSource = {
     type: "vector",
-    url: "mapbox://ppiotrowski.bwg5i0qk", // ZMIENIONO URL
+    url: "mapbox://ppiotrowski.bwg5i0qk",
   };
 
   const onMapLoad = React.useCallback(() => {
@@ -21,7 +20,7 @@ const LocationAggregatorMap = () => {
   const myTilesetLayer: LayerProps = {
     id: "my-custom-data-layer",
     type: "line",
-    "source-layer": "export-8r3k7q", // The name of the layer within your tileset
+    "source-layer": "export-8r3k7q",
     layout: {
       "line-join": "round",
       "line-cap": "round",
