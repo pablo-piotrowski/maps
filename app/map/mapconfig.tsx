@@ -36,8 +36,8 @@ export const INITIAL_VIEW_STATE = {
   zoom: 18,
   minZoom: 5,
   maxZoom: 20,
-  // pitch: 40.5,
-  // bearing: -27,
+  pitch: 40.5,
+  bearing: -27,
 };
 
 export const colorRange = [

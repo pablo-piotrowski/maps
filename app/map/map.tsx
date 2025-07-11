@@ -32,7 +32,7 @@ const LocationAggregatorMap = () => {
   };
 
   return (
-    <div>
+    <>
       <Map
         id="my-custom-tileset-source"
         initialViewState={INITIAL_VIEW_STATE}
@@ -51,7 +51,7 @@ const LocationAggregatorMap = () => {
           </Source>
         )}
       </Map>
-    </div>
+    </>
   );
 };
 
