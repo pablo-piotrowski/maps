@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
     "deck.gl": "^9.1.12",
     "mapbox-gl": "^3.12.0",
     "next": "15.3.3",
