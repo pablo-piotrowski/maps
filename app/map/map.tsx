@@ -261,7 +261,10 @@ const LocationAggregatorMap = () => {
                   </div>
                 )}
 
-                <form onSubmit={handleFormSubmit} className="space-y-4">
+                <form
+                  onSubmit={handleFormSubmit}
+                  className="space-y-4 text-black"
+                >
                   <div>
                     <label
                       htmlFor="fish"
