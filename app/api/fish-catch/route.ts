@@ -118,12 +118,16 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const lakeId = searchParams.get("lake_id");
 
-    // Query to get fish catches - join with users to check privacy settings
+    // Query to get fish catches - left join with users to handle null user_id
     let query = `
       SELECT fc.*, u.username 
       FROM fish_catches fc
-      JOIN users u ON fc.user_id = u.id
-      WHERE (fc.user_id = $1 OR u.privacy_settings->>'catches_public' = 'true')
+      LEFT JOIN users u ON fc.user_id = u.id
+      WHERE (
+        fc.user_id = $1 
+        OR fc.user_id IS NULL 
+        OR (u.privacy_settings->>'catches_public')::boolean = true
+      )
     `;
     const values: (string | number)[] = [userId];
 
