@@ -8,6 +8,8 @@ export type FishCatch = {
   weight: number | null;
   date: string; // Date string in YYYY-MM-DD format
   time: string; // Time string in HH:MM:SS format
+  user_id: number;
+  username?: string; // Included when joining with users table
   created_at: string;
   updated_at: string;
 };
@@ -19,6 +21,7 @@ export type CreateFishCatch = {
   weight?: number | null;
   date: string;
   time: string;
+  // user_id will be extracted from JWT token, not sent in request
 };
 
 export type UpdateFishCatch = {

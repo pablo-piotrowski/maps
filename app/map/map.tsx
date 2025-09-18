@@ -10,11 +10,14 @@ import Map, {
 import "mapbox-gl/dist/mapbox-gl.css";
 import { INITIAL_VIEW_STATE } from "./mapconfig";
 import { MapMouseEvent } from "mapbox-gl";
+import MapHeader from "@/components/map-header";
+import { useAuth } from "@/lib/auth-context";
 
 const LocationAggregatorMap = () => {
   const [mapLoaded, setMapLoaded] = React.useState(false);
   const mapRef = React.useRef<MapRef | null>(null);
   const [popupInfo, setPopupInfo] = React.useState<PopupInfo | null>(null);
+  const { token } = useAuth();
 
   // Form state
   const [formData, setFormData] = React.useState({
@@ -125,11 +128,20 @@ const LocationAggregatorMap = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(submitData),
         });
 
         const result = await response.json();
+
+        if (response.status === 401) {
+          setSubmitMessage({
+            type: "error",
+            text: "Authentication failed. Please log in again.",
+          });
+          return;
+        }
 
         if (result.success) {
           setSubmitMessage({
@@ -158,7 +170,7 @@ const LocationAggregatorMap = () => {
         setIsSubmitting(false);
       }
     },
-    [popupInfo, formData]
+    [popupInfo, formData, token]
   );
 
   const handleInputChange = React.useCallback(
@@ -170,6 +182,7 @@ const LocationAggregatorMap = () => {
 
   return (
     <>
+      <MapHeader />
       <Map
         id="my-custom-tileset-source"
         initialViewState={INITIAL_VIEW_STATE}

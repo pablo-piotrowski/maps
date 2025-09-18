@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/lib/auth-context";
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,7 +11,9 @@ export default function RootLayout({
       <head />
 
       <body className="min-h-screen bg-slate-900">
-        <main>{children}</main>
+        <AuthProvider>
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

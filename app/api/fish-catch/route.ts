@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Pool } from "pg";
 import { CreateFishCatch, FishCatchResponse } from "@/types/fish-catch";
+import { verifyToken, extractTokenFromHeader } from "@/lib/jwt";
 
 // Create a connection pool to the database
 const pool = new Pool({
@@ -9,6 +10,32 @@ const pool = new Pool({
 
 export async function POST(request: NextRequest) {
   try {
+    // Verify authentication
+    const authHeader = request.headers.get("authorization");
+    const token = extractTokenFromHeader(authHeader);
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Authentication required",
+        },
+        { status: 401 }
+      );
+    }
+
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid authentication token",
+        },
+        { status: 401 }
+      );
+    }
+
+    const userId = parseInt(decoded.sub);
     const body = (await request.json()) as CreateFishCatch;
 
     // Validate required fields
@@ -24,8 +51,8 @@ export async function POST(request: NextRequest) {
 
     // Insert the fish catch into the database
     const query = `
-      INSERT INTO fish_catches (lake_id, fish, length, weight, date, time)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO fish_catches (lake_id, fish, length, weight, date, time, user_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `;
 
@@ -36,6 +63,7 @@ export async function POST(request: NextRequest) {
       body.weight || null,
       body.date,
       body.time,
+      userId,
     ];
 
     const result = await pool.query(query, values);
@@ -61,18 +89,50 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
+    // Verify authentication
+    const authHeader = request.headers.get("authorization");
+    const token = extractTokenFromHeader(authHeader);
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Authentication required",
+        },
+        { status: 401 }
+      );
+    }
+
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid authentication token",
+        },
+        { status: 401 }
+      );
+    }
+
+    const userId = parseInt(decoded.sub);
     const { searchParams } = new URL(request.url);
     const lakeId = searchParams.get("lake_id");
 
-    let query = "SELECT * FROM fish_catches";
-    const values: string[] = [];
+    // Query to get fish catches - join with users to check privacy settings
+    let query = `
+      SELECT fc.*, u.username 
+      FROM fish_catches fc
+      JOIN users u ON fc.user_id = u.id
+      WHERE (fc.user_id = $1 OR u.privacy_settings->>'catches_public' = 'true')
+    `;
+    const values: (string | number)[] = [userId];
 
     if (lakeId) {
-      query += " WHERE lake_id = $1";
+      query += " AND fc.lake_id = $2";
       values.push(lakeId);
     }
 
-    query += " ORDER BY date DESC, time DESC";
+    query += " ORDER BY fc.date DESC, fc.time DESC";
 
     const result = await pool.query(query, values);
 
