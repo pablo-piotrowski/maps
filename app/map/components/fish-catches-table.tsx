@@ -18,7 +18,7 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center py-8 text-gray-500 text-sm border rounded-md bg-gray-50 w-full">
-          No catches recorded for this lake yet.
+          Brak zapisanych połowów dla tego jeziora.
         </div>
       </div>
     );
@@ -30,16 +30,16 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
         <thead className="bg-gray-50 sticky top-0">
           <tr>
             <th className="px-3 py-2 text-left font-medium text-gray-700">
-              Angler
+              Wędkarz
             </th>
             <th className="px-3 py-2 text-left font-medium text-gray-700">
-              Fish
+              Ryba
             </th>
             <th className="px-3 py-2 text-left font-medium text-gray-700">
-              Size
+              Rozmiar
             </th>
             <th className="px-3 py-2 text-left font-medium text-gray-700">
-              Date
+              Data
             </th>
           </tr>
         </thead>
@@ -59,9 +59,9 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
                     <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   )}
                   {catch_.username ||
-                    (catch_.user_id ? "Unknown User" : "Anonymous")}
+                    (catch_.user_id ? "Nieznany użytkownik" : "Anonimowy")}
                   {currentUserId && catch_.user_id === currentUserId && (
-                    <span className="ml-1 text-xs text-blue-600">(You)</span>
+                    <span className="ml-1 text-xs text-blue-600">(Ty)</span>
                   )}
                 </div>
               </td>
@@ -85,7 +85,7 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
                 )}
               </td>
               <td className="px-3 py-2 text-gray-600 text-xs">
-                <div>{new Date(catch_.date).toLocaleDateString()}</div>
+                <div>{new Date(catch_.date).toLocaleDateString("pl-PL")}</div>
                 <div className="text-gray-400">{catch_.time}</div>
               </td>
             </tr>

@@ -34,7 +34,7 @@ export const useFishCatchForm = (
       e.preventDefault();
 
       if (!popupInfo || !formData.fish) {
-        setSubmitMessage({ type: "error", text: "Fish type is required" });
+        setSubmitMessage({ type: "error", text: "Rodzaj ryby jest wymagany" });
         return;
       }
 
@@ -78,7 +78,7 @@ export const useFishCatchForm = (
         if (response.status === 401) {
           setSubmitMessage({
             type: "error",
-            text: "Authentication failed. Please log in again.",
+            text: "Błąd autoryzacji. Zaloguj się ponownie.",
           });
           return;
         }
@@ -86,7 +86,7 @@ export const useFishCatchForm = (
         if (result.success) {
           setSubmitMessage({
             type: "success",
-            text: "Fish catch recorded successfully!",
+            text: "Połów został pomyślnie zapisany!",
           });
           // Reset form
           setFormData({ fish: "", length: "", weight: "" });
@@ -103,13 +103,13 @@ export const useFishCatchForm = (
         } else {
           setSubmitMessage({
             type: "error",
-            text: result.error || "Failed to record fish catch",
+            text: result.error || "Nie udało się zapisać połowu",
           });
         }
       } catch (error) {
         setSubmitMessage({
           type: "error",
-          text: "Network error. Please try again. " + error,
+          text: "Błąd połączenia. Spróbuj ponownie. " + error,
         });
       } finally {
         setIsSubmitting(false);

@@ -41,16 +41,16 @@ export default function LoginPage() {
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Adres email jest wymagany";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+      newErrors.email = "Adres email jest nieprawidłowy";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Hasło jest wymagane";
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = "Hasło musi mieć co najmniej 6 znaków";
     }
 
     setErrors(newErrors);
@@ -84,10 +84,10 @@ export default function LoginPage() {
         // Redirect to map page
         router.push("/map");
       } else {
-        setErrors({ general: data.error || "Login failed" });
+        setErrors({ general: data.error || "Logowanie nie powiodło się" });
       }
     } catch {
-      setErrors({ general: "Something went wrong. Please try again." });
+      setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
     } finally {
       setIsLoading(false);
     }
@@ -113,15 +113,15 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            Zaloguj się do swojego konta
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
+            Lub{" "}
             <Link
               href="/register"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              create a new account
+              utwórz nowe konto
             </Link>
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Adres email
               </label>
               <input
                 id="email"
@@ -144,7 +144,7 @@ export default function LoginPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.email ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Enter your email"
+                placeholder="Wprowadź swój email"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -158,7 +158,7 @@ export default function LoginPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                Hasło
               </label>
               <input
                 id="password"
@@ -169,7 +169,7 @@ export default function LoginPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.password ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Enter your password"
+                placeholder="Wprowadź swoje hasło"
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -217,21 +217,12 @@ export default function LoginPage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Signing in...
+                  Logowanie...
                 </>
               ) : (
-                "Sign in"
+                "Zaloguj się"
               )}
             </button>
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="/"
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              ← Back to map
-            </Link>
           </div>
         </form>
       </div>

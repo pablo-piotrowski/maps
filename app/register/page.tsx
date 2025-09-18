@@ -43,38 +43,38 @@ export default function RegisterPage() {
 
     // Username validation
     if (!formData.username) {
-      newErrors.username = "Username is required";
+      newErrors.username = "Nazwa użytkownika jest wymagana";
     } else if (formData.username.length < 3) {
-      newErrors.username = "Username must be at least 3 characters";
+      newErrors.username = "Nazwa użytkownika musi mieć co najmniej 3 znaki";
     } else if (formData.username.length > 50) {
-      newErrors.username = "Username must be less than 50 characters";
+      newErrors.username = "Nazwa użytkownika musi mieć mniej niż 50 znaków";
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
       newErrors.username =
-        "Username can only contain letters, numbers, and underscores";
+        "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia";
     }
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Adres email jest wymagany";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+      newErrors.email = "Adres email jest nieprawidłowy";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Hasło jest wymagane";
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = "Hasło musi mieć co najmniej 6 znaków";
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
       newErrors.password =
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number";
+        "Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę i jedną cyfrę";
     }
 
     // Confirm password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password";
+      newErrors.confirmPassword = "Potwierdź swoje hasło";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = "Hasła nie są identyczne";
     }
 
     setErrors(newErrors);
@@ -112,10 +112,10 @@ export default function RegisterPage() {
         // Redirect to map page
         router.push("/map");
       } else {
-        setErrors({ general: data.error || "Registration failed" });
+        setErrors({ general: data.error || "Rejestracja nie powiodła się" });
       }
     } catch {
-      setErrors({ general: "Something went wrong. Please try again." });
+      setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
     } finally {
       setIsLoading(false);
     }
@@ -141,15 +141,15 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
+            Utwórz swoje konto
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
+            Lub{" "}
             <Link
               href="/login"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              sign in to existing account
+              zaloguj się na istniejące konto
             </Link>
           </p>
         </div>
@@ -161,7 +161,7 @@ export default function RegisterPage() {
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-700"
               >
-                Username
+                Nazwa użytkownika
               </label>
               <input
                 id="username"
@@ -172,7 +172,7 @@ export default function RegisterPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.username ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Choose a username"
+                placeholder="Wybierz nazwę użytkownika"
                 value={formData.username}
                 onChange={handleChange}
               />
@@ -186,7 +186,7 @@ export default function RegisterPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Adres email
               </label>
               <input
                 id="email"
@@ -197,7 +197,7 @@ export default function RegisterPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.email ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Enter your email"
+                placeholder="Wprowadź swój email"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -211,7 +211,7 @@ export default function RegisterPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                Hasło
               </label>
               <input
                 id="password"
@@ -222,7 +222,7 @@ export default function RegisterPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.password ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Create a password"
+                placeholder="Utwórz hasło"
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -236,7 +236,7 @@ export default function RegisterPage() {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700"
               >
-                Confirm Password
+                Potwierdź hasło
               </label>
               <input
                 id="confirmPassword"
@@ -247,7 +247,7 @@ export default function RegisterPage() {
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
                   errors.confirmPassword ? "border-red-300" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
-                placeholder="Confirm your password"
+                placeholder="Potwierdź swoje hasło"
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
@@ -297,10 +297,10 @@ export default function RegisterPage() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Creating account...
+                  Tworzenie konta...
                 </>
               ) : (
-                "Create account"
+                "Utwórz konto"
               )}
             </button>
           </div>
@@ -310,7 +310,7 @@ export default function RegisterPage() {
               href="/"
               className="text-sm text-blue-600 hover:text-blue-500"
             >
-              ← Back to map
+              ← Powrót do mapy
             </Link>
           </div>
         </form>

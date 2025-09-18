@@ -25,10 +25,11 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
       "name" in popupInfo.properties
     ) {
       return String(
-        (popupInfo.properties as Record<string, unknown>).name || "Unnamed Lake"
+        (popupInfo.properties as Record<string, unknown>).name ||
+          "Nienazwane jezioro"
       );
     }
-    return "Unnamed Lake";
+    return "Nienazwane jezioro";
   };
 
   return (
@@ -67,7 +68,7 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
         <div className="flex-1 flex flex-col min-h-0">
           <div className="px-6 pt-4 pb-2 flex-shrink-0">
             <h4 className="text-lg font-medium text-black mb-3">
-              Recent Catches ({lakeCatches.length})
+              Ostatnie połowy ({lakeCatches.length})
             </h4>
           </div>
 
