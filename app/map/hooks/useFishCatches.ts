@@ -9,17 +9,18 @@ export const useFishCatches = () => {
 
   const fetchLakeCatches = useCallback(
     async (lakeId: string) => {
-      if (!token) return;
-
       setIsLoadingCatches(true);
       try {
+        const headers: Record<string, string> = {};
+
+        // Add authorization header only if token exists
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
+
         const response = await fetch(
           `/api/fish-catch?lake_id=${encodeURIComponent(lakeId)}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { headers }
         );
 
         if (response.ok) {

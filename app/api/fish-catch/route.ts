@@ -89,34 +89,20 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // Verify authentication
-    const authHeader = request.headers.get("authorization");
-    const token = extractTokenFromHeader(authHeader);
-
-    if (!token) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Authentication required",
-        },
-        { status: 401 }
-      );
-    }
-
-    const decoded = verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Invalid authentication token",
-        },
-        { status: 401 }
-      );
-    }
-
-    const userId = parseInt(decoded.sub);
     const { searchParams } = new URL(request.url);
     const lakeId = searchParams.get("lake_id");
+
+    // Check if user is authenticated (optional for GET)
+    const authHeader = request.headers.get("authorization");
+    const token = extractTokenFromHeader(authHeader);
+    let userId: number | null = null;
+
+    if (token) {
+      const decoded = verifyToken(token);
+      if (decoded) {
+        userId = parseInt(decoded.sub);
+      }
+    }
 
     // Query to get fish catches - left join with users to handle null user_id
     let query = `
@@ -124,15 +110,22 @@ export async function GET(request: NextRequest) {
       FROM fish_catches fc
       LEFT JOIN users u ON fc.user_id = u.id
       WHERE (
-        fc.user_id = $1 
-        OR fc.user_id IS NULL 
+        fc.user_id IS NULL 
         OR (u.privacy_settings->>'catches_public')::boolean = true
+        ${userId ? "OR fc.user_id = $1" : ""}
       )
     `;
-    const values: (string | number)[] = [userId];
+
+    const values: (string | number)[] = [];
+    let paramCounter = 1;
+
+    if (userId) {
+      values.push(userId);
+      paramCounter++;
+    }
 
     if (lakeId) {
-      query += " AND fc.lake_id = $2";
+      query += ` AND fc.lake_id = $${paramCounter}`;
       values.push(lakeId);
     }
 

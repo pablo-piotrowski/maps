@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import Link from "next/link";
 
 export default function MapHeader() {
   const { user, logout } = useAuth();
@@ -22,12 +23,30 @@ export default function MapHeader() {
             <span className="text-gray-600">Witaj, {user.username}!</span>
           )}
         </div>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-        >
-          Wyloguj
-        </button>
+
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+          >
+            Wyloguj
+          </button>
+        ) : (
+          <div className="flex space-x-2">
+            <Link
+              href="/login"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Zaloguj się
+            </Link>
+            <Link
+              href="/register"
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Zarejestruj się
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
