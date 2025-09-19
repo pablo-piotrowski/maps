@@ -18,7 +18,7 @@ export default function LoginPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && token) {
-      router.replace("/map");
+      router.replace("/");
     }
   }, [authLoading, token, router]);
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
         // Use auth context login function
         login(data.token, data.user);
         // Redirect to map page
-        router.push("/map");
+        router.push("/");
       } else {
         setErrors({ general: data.error || "Logowanie nie powiodło się" });
       }
