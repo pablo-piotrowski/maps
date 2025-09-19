@@ -22,7 +22,6 @@ export type FishCatchFormProps = {
 export type FishCatchesTableProps = {
   catches: FishCatch[];
   isLoading: boolean;
-  currentUserId?: number;
 };
 
 export type PopupInfo = {
@@ -37,7 +36,6 @@ export type LakeDrawerProps = {
   onClose: () => void;
   lakeCatches: FishCatch[];
   isLoadingCatches: boolean;
-  currentUserId?: number;
   formData: FishCatchFormData;
   isSubmitting: boolean;
   submitMessage: SubmitMessage | null;

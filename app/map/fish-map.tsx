@@ -11,7 +11,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { INITIAL_VIEW_STATE } from "./mapconfig";
 import { MapMouseEvent } from "mapbox-gl";
 import LakeDrawer from "./components/lake-drawer";
-import { useAuth } from "@/lib/auth-context";
 import { useFishCatches } from "./hooks/useFishCatches";
 import { useFishCatchForm } from "./hooks/useFishCatchForm";
 import { useLakeDrawer } from "./hooks/useLakeDrawer";
@@ -19,7 +18,6 @@ import { useLakeDrawer } from "./hooks/useLakeDrawer";
 const FishMap = () => {
   const [mapLoaded, setMapLoaded] = React.useState(false);
   const mapRef = React.useRef<MapRef | null>(null);
-  const { user } = useAuth();
 
   // Custom hooks for state management
   const { lakeCatches, isLoadingCatches, fetchLakeCatches } = useFishCatches();
@@ -124,7 +122,6 @@ const FishMap = () => {
           onClose={handleCloseDrawer}
           lakeCatches={lakeCatches}
           isLoadingCatches={isLoadingCatches}
-          currentUserId={user?.id}
           formData={formData}
           isSubmitting={isSubmitting}
           submitMessage={submitMessage}

@@ -1,17 +1,17 @@
 "use client";
 
-import { useAuth } from "@/lib/auth-context";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import Link from "next/link";
 
 export default function MapHeader() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useReduxAuth();
   const router = useRouter();
 
   const handleLogout = useCallback(() => {
     logout();
-    router.push("/login");
+    router.push("/");
   }, [logout, router]);
 
   return (

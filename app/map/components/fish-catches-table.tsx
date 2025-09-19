@@ -1,11 +1,13 @@
 import React from "react";
 import { FishCatchesTableProps } from "@/types/map-components";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 
 const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
   catches,
   isLoading,
-  currentUserId,
 }) => {
+  const { user } = useReduxAuth();
+  const currentUserId = user?.id;
   if (isLoading) {
     return (
       <div className="flex justify-center py-8">

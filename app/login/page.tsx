@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/lib/auth-context";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -11,19 +11,24 @@ export default function LoginPage() {
     password: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { login, token, isLoading: authLoading } = useAuth();
+  const { login, isLoading, error, isAuthenticated, clearError } =
+    useReduxAuth();
 
   // Redirect if already logged in
   useEffect(() => {
-    if (!authLoading && token) {
+    if (!isLoading && isAuthenticated) {
       router.replace("/");
     }
-  }, [authLoading, token, router]);
+  }, [isLoading, isAuthenticated, router]);
+
+  // Clear any auth errors when component mounts
+  useEffect(() => {
+    clearError();
+  }, [clearError]);
 
   // Show loading while checking authentication
-  if (authLoading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-blue-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
@@ -32,7 +37,7 @@ export default function LoginPage() {
   }
 
   // Don't render if already logged in
-  if (token) {
+  if (isAuthenticated) {
     return null;
   }
 
@@ -64,32 +69,20 @@ export default function LoginPage() {
       return;
     }
 
-    setIsLoading(true);
     setErrors({});
 
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const success = await login(formData.email, formData.password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Use auth context login function
-        login(data.token, data.user);
+      if (success) {
         // Redirect to map page
         router.push("/");
       } else {
-        setErrors({ general: data.error || "Logowanie nie powiodło się" });
+        // Redux auth error will be available in the error state
+        setErrors({ general: error || "Logowanie nie powiodło się" });
       }
     } catch {
       setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
-    } finally {
-      setIsLoading(false);
     }
   };
 

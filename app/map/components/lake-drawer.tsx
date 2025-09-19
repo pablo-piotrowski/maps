@@ -2,7 +2,7 @@ import React from "react";
 import { LakeDrawerProps } from "@/types/map-components";
 import FishCatchForm from "./fish-catch-form";
 import FishCatchesTable from "./fish-catches-table";
-import { useAuth } from "@/lib/auth-context";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 
 const LakeDrawer: React.FC<LakeDrawerProps> = ({
   popupInfo,
@@ -10,14 +10,13 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
   onClose,
   lakeCatches,
   isLoadingCatches,
-  currentUserId,
   formData,
   isSubmitting,
   submitMessage,
   onInputChange,
   onFormSubmit,
 }) => {
-  const { user } = useAuth();
+  const { user } = useReduxAuth();
 
   if (!popupInfo) return null;
 
@@ -79,7 +78,6 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
             <FishCatchesTable
               catches={lakeCatches}
               isLoading={isLoadingCatches}
-              currentUserId={currentUserId}
             />
           </div>
         </div>

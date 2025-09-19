@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useAuth } from "@/lib/auth-context";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 import {
   FishCatchFormData,
   SubmitMessage,
@@ -18,7 +18,7 @@ export const useFishCatchForm = (
   const [submitMessage, setSubmitMessage] = useState<SubmitMessage | null>(
     null
   );
-  const { token } = useAuth();
+  const { token } = useReduxAuth();
 
   const handleInputChange = useCallback((field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));

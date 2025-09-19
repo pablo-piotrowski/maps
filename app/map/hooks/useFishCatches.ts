@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
-import { useAuth } from "@/lib/auth-context";
+import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
 import { FishCatch } from "@/types/fish-catch";
 
 export const useFishCatches = () => {
   const [lakeCatches, setLakeCatches] = useState<FishCatch[]>([]);
   const [isLoadingCatches, setIsLoadingCatches] = useState(false);
-  const { token, user } = useAuth();
+  const { token, user } = useReduxAuth();
 
   const fetchLakeCatches = useCallback(
     async (lakeId: string) => {
