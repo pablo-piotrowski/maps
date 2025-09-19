@@ -29,6 +29,13 @@ export default function RegisterPage() {
     clearError();
   }, [clearError]);
 
+  // Handle Redux error changes
+  useEffect(() => {
+    if (error) {
+      setErrors({ general: error });
+    }
+  }, [error]);
+
   // Show loading while checking authentication
   if (isLoading) {
     return (
@@ -105,10 +112,8 @@ export default function RegisterPage() {
       if (success) {
         // Redirect to map page
         router.push("/");
-      } else {
-        // Redux auth error will be available in the error state
-        setErrors({ general: error || "Rejestracja nie powiodła się" });
       }
+      // Error handling is now done in useEffect when error state changes
     } catch {
       setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
     }

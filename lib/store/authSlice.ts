@@ -43,7 +43,7 @@ export const loginUser = createAsyncThunk(
 
       if (!response.ok) {
         const errorData = await response.json();
-        return rejectWithValue(errorData.error || "Login failed");
+        return rejectWithValue(errorData.error || "Logowanie nie powiodło się");
       }
 
       const data = await response.json();
@@ -53,7 +53,7 @@ export const loginUser = createAsyncThunk(
 
       return { token: data.token, user: data.user };
     } catch {
-      return rejectWithValue("Network error occurred");
+      return rejectWithValue("Wystąpił błąd sieci");
     }
   }
 );
@@ -76,7 +76,9 @@ export const registerUser = createAsyncThunk(
 
       if (!response.ok) {
         const errorData = await response.json();
-        return rejectWithValue(errorData.error || "Registration failed");
+        return rejectWithValue(
+          errorData.error || "Rejestracja nie powiodła się"
+        );
       }
 
       const data = await response.json();
@@ -86,7 +88,7 @@ export const registerUser = createAsyncThunk(
 
       return { token: data.token, user: data.user };
     } catch {
-      return rejectWithValue("Network error occurred");
+      return rejectWithValue("Wystąpił błąd sieci");
     }
   }
 );
@@ -99,7 +101,7 @@ export const verifyToken = createAsyncThunk(
       const token = localStorage.getItem("token");
 
       if (!token) {
-        return rejectWithValue("No token found");
+        return rejectWithValue("Brak tokenu");
       }
 
       const response = await fetch("/api/auth/me", {
@@ -110,7 +112,7 @@ export const verifyToken = createAsyncThunk(
 
       if (!response.ok) {
         localStorage.removeItem("token");
-        return rejectWithValue("Token invalid");
+        return rejectWithValue("Token nieprawidłowy");
       }
 
       const data = await response.json();
@@ -118,7 +120,7 @@ export const verifyToken = createAsyncThunk(
       return { token, user: data.user };
     } catch {
       localStorage.removeItem("token");
-      return rejectWithValue("Token verification failed");
+      return rejectWithValue("Weryfikacja tokenu nie powiodła się");
     }
   }
 );

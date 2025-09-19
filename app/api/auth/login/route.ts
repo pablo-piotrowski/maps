@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     // Validate input
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "Email i hasło są wymagane" },
         { status: 400 }
       );
     }
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     if (userResult.rows.length === 0) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Nieprawidłowy email lub hasło" },
         { status: 401 }
       );
     }
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     // Check if account is active
     if (!user.is_active) {
       return NextResponse.json(
-        { error: "Account is deactivated" },
+        { error: "Konto zostało dezaktywowane" },
         { status: 401 }
       );
     }
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
     if (!isValidPassword) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Nieprawidłowy email lub hasło" },
         { status: 401 }
       );
     }
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Błąd wewnętrzny serwera" },
       { status: 500 }
     );
   }

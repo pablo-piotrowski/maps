@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     // Validate input
     if (!username || !email || !password) {
       return NextResponse.json(
-        { error: "Username, email, and password are required" },
+        { error: "Nazwa użytkownika, email i hasło są wymagane" },
         { status: 400 }
       );
     }
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     // Validate username format
     if (username.length < 3 || username.length > 50) {
       return NextResponse.json(
-        { error: "Username must be between 3 and 50 characters" },
+        { error: "Nazwa użytkownika musi mieć od 3 do 50 znaków" },
         { status: 400 }
       );
     }
@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
       return NextResponse.json(
         {
-          error: "Username can only contain letters, numbers, and underscores",
+          error:
+            "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia",
         },
         { status: 400 }
       );
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
     // Validate email format
     if (!/\S+@\S+\.\S+/.test(email)) {
       return NextResponse.json(
-        { error: "Invalid email format" },
+        { error: "Nieprawidłowy format adresu email" },
         { status: 400 }
       );
     }
@@ -49,7 +50,7 @@ export async function POST(request: NextRequest) {
     // Validate password strength
     if (password.length < 6) {
       return NextResponse.json(
-        { error: "Password must be at least 6 characters long" },
+        { error: "Hasło musi mieć co najmniej 6 znaków" },
         { status: 400 }
       );
     }
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+            "Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę i jedną cyfrę",
         },
         { status: 400 }
       );
@@ -72,7 +73,7 @@ export async function POST(request: NextRequest) {
 
     if (usernameCheck.rows.length > 0) {
       return NextResponse.json(
-        { error: "Username already exists" },
+        { error: "Nazwa użytkownika jest już zajęta" },
         { status: 409 }
       );
     }
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
 
     if (emailCheck.rows.length > 0) {
       return NextResponse.json(
-        { error: "Email already registered" },
+        { error: "Konto na ten adres email już istnieje" },
         { status: 409 }
       );
     }
@@ -130,7 +131,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Błąd wewnętrzny serwera" },
       { status: 500 }
     );
   }
