@@ -225,6 +225,12 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
+
+        <div className="text-center">
+          <Link href="/" className="text-sm text-blue-600 hover:text-blue-500">
+            ← Powrót do mapy
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ import Map, {
 import "mapbox-gl/dist/mapbox-gl.css";
 import { INITIAL_VIEW_STATE } from "./mapconfig";
 import { MapMouseEvent } from "mapbox-gl";
-import MapHeader from "@/components/map-header";
 import LakeDrawer from "./components/lake-drawer";
 import { useAuth } from "@/lib/auth-context";
 import { useFishCatches } from "./hooks/useFishCatches";
@@ -97,7 +96,6 @@ const FishMap = () => {
 
   return (
     <>
-      <MapHeader />
       <Map
         id="my-custom-tileset-source"
         initialViewState={INITIAL_VIEW_STATE}
