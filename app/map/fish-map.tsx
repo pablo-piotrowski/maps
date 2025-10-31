@@ -86,8 +86,9 @@ const FishMap = () => {
     setMapLoaded(true);
   }, []);
 
+  const tilesetLayerIdRef = React.useRef('my-custom-data-layer');
   const myTilesetLayer: LayerProps = {
-    id: 'my-custom-data-layer',
+    id: tilesetLayerIdRef.current,
     type: 'fill',
     'source-layer': 'export-8r3k7q',
     paint: {
@@ -101,7 +102,10 @@ const FishMap = () => {
     (event: MapMouseEvent) => {
       if (!mapRef.current) return;
       const clickedFeature = event.features?.[0];
-      if (clickedFeature && clickedFeature.layer?.id === myTilesetLayer.id) {
+      if (
+        clickedFeature &&
+        clickedFeature.layer?.id === tilesetLayerIdRef.current
+      ) {
         openDrawerForLake(
           event.lngLat.lng,
           event.lngLat.lat,
@@ -116,7 +120,7 @@ const FishMap = () => {
     if (!mapRef.current) return;
     const hoveredFeature = event.features?.[0];
     mapRef.current.getCanvas().style.cursor =
-      hoveredFeature && hoveredFeature.layer?.id === myTilesetLayer.id
+      hoveredFeature && hoveredFeature.layer?.id === tilesetLayerIdRef.current
         ? 'pointer'
         : '';
   }, []);
