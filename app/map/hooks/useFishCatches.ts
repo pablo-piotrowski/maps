@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
-import { FishCatch } from "@/types/fish-catch";
+import { useState, useCallback } from 'react';
+import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
+import type { FishCatch } from '@/types/fish-catch';
 
 export const useFishCatches = () => {
   const [lakeCatches, setLakeCatches] = useState<FishCatch[]>([]);
@@ -44,10 +44,10 @@ export const useFishCatches = () => {
             setLakeCatches(sortedCatches);
           }
         } else {
-          console.error("API Error:", response.status, response.statusText);
+          console.error('API Error:', response.status, response.statusText);
         }
       } catch (error) {
-        console.error("Failed to fetch lake catches:", error);
+        console.error('Failed to fetch lake catches:', error);
       } finally {
         setIsLoadingCatches(false);
       }
@@ -59,5 +59,6 @@ export const useFishCatches = () => {
     lakeCatches,
     isLoadingCatches,
     fetchLakeCatches,
+    clearLakeCatches: () => setLakeCatches([]),
   };
 };

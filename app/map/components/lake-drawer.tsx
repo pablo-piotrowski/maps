@@ -1,12 +1,15 @@
-import React from "react";
-import { LakeDrawerProps } from "@/types/map-components";
-import FishCatchForm from "./fish-catch-form";
-import FishCatchesTable from "./fish-catches-table";
-import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
+import type React from 'react';
+import type { LakeDrawerProps } from '@/types/map-components';
+import FishCatchForm from './fish-catch-form';
+import FishCatchesTable from './fish-catches-table';
+import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
+import { useMapUI } from '@/lib/hooks/useMapUI';
 
+// Refaktoryzacja: komponent nie potrzebuje już propsów isOpen/popupInfo – pobiera je ze stanu Redux.
+// Zachowujemy jednak kompatybilność z obecną sygnaturą (można później oczyścić typ LakeDrawerProps).
 const LakeDrawer: React.FC<LakeDrawerProps> = ({
-  popupInfo,
-  isOpen,
+  popupInfo: _legacyPopupInfo,
+  isOpen: _legacyIsOpen,
   onClose,
   lakeCatches,
   isLoadingCatches,
@@ -17,39 +20,47 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
   onFormSubmit,
 }) => {
   const { user } = useReduxAuth();
+  const { popupInfo, isLakeDrawerOpen } = useMapUI();
 
   if (!popupInfo) return null;
 
   const getLakeName = () => {
     if (
-      typeof popupInfo.properties === "object" &&
+      typeof popupInfo.properties === 'object' &&
       popupInfo.properties !== null &&
-      "name" in popupInfo.properties
+      'name' in popupInfo.properties
     ) {
       return String(
         (popupInfo.properties as Record<string, unknown>).name ||
-          "Nienazwane jezioro"
+          'Nienazwane jezioro'
       );
     }
-    return "Nienazwane jezioro";
+    return 'Nienazwane jezioro';
   };
 
   return (
     <>
       {/* Backdrop */}
-      <div
+      <button
+        type="button"
         className={`fixed inset-0 bg-black/60 z-40 transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0"
+          isLakeDrawerOpen ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={onClose}
+        aria-label="Zamknij panel jeziora"
       />
 
       {/* Drawer */}
       <div
         className={`fixed inset-y-0 right-0 w-full md:w-1/2 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isLakeDrawerOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') onClose();
+        }}
       >
         {/* Header */}
         <div className="p-6 border-b border-gray-200 flex-shrink-0">
@@ -58,8 +69,10 @@ const LakeDrawer: React.FC<LakeDrawerProps> = ({
               {getLakeName()}
             </h3>
             <button
+              type="button"
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 text-2xl font-bold leading-none cursor-pointer"
+              aria-label="Zamknij panel"
             >
               ×
             </button>

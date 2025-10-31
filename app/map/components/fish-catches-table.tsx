@@ -1,6 +1,5 @@
-import React from "react";
-import { FishCatchesTableProps } from "@/types/map-components";
-import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
+import type { FishCatchesTableProps } from '@/types/map-components';
+import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
 
 const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
   catches,
@@ -51,8 +50,8 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
               key={catch_.id}
               className={`${
                 currentUserId && catch_.user_id === currentUserId
-                  ? "bg-blue-50"
-                  : "bg-white"
+                  ? 'bg-blue-50'
+                  : 'bg-white'
               } hover:bg-gray-50`}
             >
               <td className="px-3 py-2 text-gray-900">
@@ -60,11 +59,13 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
                   {currentUserId && catch_.user_id === currentUserId && (
                     <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
                   )}
-                  {catch_.username ||
-                    (catch_.user_id ? "Nieznany użytkownik" : "Anonimowy")}
-                  {currentUserId && catch_.user_id === currentUserId && (
-                    <span className="ml-1 text-xs text-blue-600">(Ty)</span>
-                  )}
+                  {
+                    catch_.username
+                      ? catch_.username
+                      : catch_.user_id
+                      ? 'Anonimowy' // user istnieje w bazie, ale jego nazwa jest ukryta (privacy)
+                      : 'Nieznany użytkownik' /* brak powiązanego user_id */
+                  }
                 </div>
               </td>
               <td className="px-3 py-2 text-gray-900 font-medium">
@@ -83,11 +84,11 @@ const FishCatchesTable: React.FC<FishCatchesTableProps> = ({
                 ) : catch_.weight ? (
                   `${catch_.weight}g`
                 ) : (
-                  "-"
+                  '-'
                 )}
               </td>
               <td className="px-3 py-2 text-gray-600 text-xs">
-                <div>{new Date(catch_.date).toLocaleDateString("pl-PL")}</div>
+                <div>{new Date(catch_.date).toLocaleDateString('pl-PL')}</div>
                 <div className="text-gray-400">{catch_.time}</div>
               </td>
             </tr>
