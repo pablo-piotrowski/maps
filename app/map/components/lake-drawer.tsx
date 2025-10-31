@@ -7,9 +7,19 @@ import { useMapUI } from '@/lib/hooks/useMapUI';
 
 // Refaktoryzacja: komponent nie potrzebuje już propsów isOpen/popupInfo – pobiera je ze stanu Redux.
 // Zachowujemy jednak kompatybilność z obecną sygnaturą (można później oczyścić typ LakeDrawerProps).
-const LakeDrawer: React.FC<LakeDrawerProps> = ({
-  popupInfo: _legacyPopupInfo,
-  isOpen: _legacyIsOpen,
+const LakeDrawer: React.FC<
+  Pick<
+    LakeDrawerProps,
+    | 'onClose'
+    | 'lakeCatches'
+    | 'isLoadingCatches'
+    | 'formData'
+    | 'isSubmitting'
+    | 'submitMessage'
+    | 'onInputChange'
+    | 'onFormSubmit'
+  >
+> = ({
   onClose,
   lakeCatches,
   isLoadingCatches,

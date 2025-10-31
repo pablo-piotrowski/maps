@@ -1,4 +1,4 @@
-import { FishCatch } from "./fish-catch";
+import type { FishCatch } from './fish-catch';
 
 export type FishCatchFormData = {
   fish: string;
@@ -7,7 +7,7 @@ export type FishCatchFormData = {
 };
 
 export type SubmitMessage = {
-  type: "success" | "error";
+  type: 'success' | 'error';
   text: string;
 };
 
@@ -31,8 +31,6 @@ export type PopupInfo = {
 };
 
 export type LakeDrawerProps = {
-  popupInfo: PopupInfo | null;
-  isOpen: boolean;
   onClose: () => void;
   lakeCatches: FishCatch[];
   isLoadingCatches: boolean;

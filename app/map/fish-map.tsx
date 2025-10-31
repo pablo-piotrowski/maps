@@ -172,8 +172,6 @@ const FishMap = () => {
       )}
 
       <LakeDrawer
-        popupInfo={popupInfo}
-        isOpen={false}
         onClose={() => {
           // Zamykamy animacyjnie i czyścimy form po zakończeniu.
           closeDrawer(300);
