@@ -1,6 +1,17 @@
 // TypeScript types for user authentication and management
 
+// Main User type (used in auth state - simplified version)
 export type User = {
+  id: number;
+  username: string;
+  email: string;
+  createdAt: string;
+  lastLogin: string;
+  isActive: boolean;
+};
+
+// Extended User type (full database model)
+export type ExtendedUser = {
   id: number;
   username: string;
   email: string;
@@ -9,7 +20,7 @@ export type User = {
   profile_picture_url?: string;
   email_verified: boolean;
   is_active: boolean;
-  preferred_units: "metric" | "imperial";
+  preferred_units: 'metric' | 'imperial';
   privacy_settings: {
     profile_public: boolean;
     catches_public: boolean;
@@ -25,7 +36,7 @@ export type CreateUser = {
   password: string;
   first_name?: string;
   last_name?: string;
-  preferred_units?: "metric" | "imperial";
+  preferred_units?: 'metric' | 'imperial';
 };
 
 export type LoginCredentials = {
@@ -63,24 +74,46 @@ export type UserSession = {
 };
 
 export type UserStats = {
-  id: number;
-  username: string;
-  email: string;
-  total_catches: number;
-  lakes_visited: number;
-  species_caught: number;
-  avg_weight: number;
-  avg_length: number;
-  biggest_fish_weight: number;
-  longest_fish_length: number;
-  first_catch_date?: string;
-  last_catch_date?: string;
+  overview: {
+    username: string;
+    total_catches: number;
+    lakes_visited: number;
+    species_caught: number;
+    avg_weight: string;
+    avg_length: string;
+    biggest_fish_weight: number | null;
+    longest_fish_length: number | null;
+    first_catch_date: string | null;
+    last_catch_date: string | null;
+  };
+  recent_catches: Array<{
+    id: number;
+    fish: string;
+    length: number | null;
+    weight: number | null;
+    date: string;
+    time: string;
+    lake_id: string;
+  }>;
+  favorite_lakes: Array<{
+    lake_id: string;
+    catch_count: number;
+    last_visit: string;
+  }>;
+  species_breakdown: Array<{
+    species: string;
+    count: number;
+    avg_length: string;
+    avg_weight: string;
+    biggest_weight: number | null;
+    longest_length: number | null;
+  }>;
 };
 
 export type UpdateUserProfile = {
   first_name?: string;
   last_name?: string;
-  preferred_units?: "metric" | "imperial";
+  preferred_units?: 'metric' | 'imperial';
   privacy_settings?: {
     profile_public?: boolean;
     catches_public?: boolean;

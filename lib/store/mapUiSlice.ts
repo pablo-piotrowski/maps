@@ -1,23 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-
-// Typ danych popup (z mapy) – uproszczony aby uniezależnić slice od zewnętrznych typów.
-export interface MapPopupInfo {
-  longitude: number;
-  latitude: number;
-  // Przechowujemy właściwości jako dowolny obiekt – komponenty wiedzą jak je zinterpretować.
-  properties: Record<string, unknown> | null;
-}
-
-export interface MapUiState {
-  popupInfo: MapPopupInfo | null;
-  isLakeDrawerOpen: boolean; // Czy panel dla jeziora jest otwarty (animacja / widoczność)
-  selectedLakeId: string | null; // Id jeziora (np. nazwa z properties)
-  lastInteractionTs: number | null; // Timestamp ostatniej interakcji – może służyć do efektów (np. odświeżenie połowów)
-  zoom: number; // Aktualny poziom zoomu mapy
-  longitude: number; // Aktualne centrum długość geograficzna
-  latitude: number; // Aktualne centrum szerokość geograficzna
-}
+import type { MapUiState } from '../../types/map-ui';
 
 const initialState: MapUiState = {
   popupInfo: null,

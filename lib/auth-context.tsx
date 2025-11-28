@@ -1,15 +1,8 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "../types/user";
-
-interface AuthContextType {
-  user: User | null;
-  token: string | null;
-  login: (token: string, userData: User) => void;
-  logout: () => void;
-  isLoading: boolean;
-}
+import type React from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { User, AuthContextType } from '../types/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -20,11 +13,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check if user is logged in on app start
-    const storedToken = localStorage.getItem("token");
+    const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
       // Verify token with server
-      fetch("/api/auth/me", {
+      fetch('/api/auth/me', {
         headers: {
           Authorization: `Bearer ${storedToken}`,
         },
@@ -33,7 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (response.ok) {
             return response.json();
           } else {
-            throw new Error("Token invalid");
+            throw new Error('Token invalid');
           }
         })
         .then((data) => {
@@ -41,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         })
         .catch(() => {
           // Token is invalid, remove it
-          localStorage.removeItem("token");
+          localStorage.removeItem('token');
           setToken(null);
         });
     }
@@ -51,13 +44,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (newToken: string, userData: User) => {
     setToken(newToken);
     setUser(userData);
-    localStorage.setItem("token", newToken);
+    localStorage.setItem('token', newToken);
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
   };
 
   const value = {
@@ -74,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }
