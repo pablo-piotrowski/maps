@@ -2,20 +2,17 @@
 
 import React, { useCallback } from 'react';
 import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function MapHeader() {
   const { user, logout } = useReduxAuth();
   const router = useRouter();
-  const pathname = usePathname();
 
   const handleLogout = useCallback(() => {
     logout();
     router.push('/');
   }, [logout, router]);
-
-  const isStatsPage = pathname === '/stats';
 
   return (
     <div className="absolute top-0 left-0 right-0 z-30 bg-white/90 backdrop-blur-sm border-b border-gray-200 px-4 py-3">
