@@ -110,6 +110,38 @@ export type UserStats = {
   }>;
 };
 
+// Global platform statistics (available for all users)
+export type PlatformStats = {
+  total_users: number;
+  total_catches: number;
+  total_species_caught: number;
+  total_lakes_with_catches: number;
+  biggest_fish: {
+    species: string;
+    weight: number;
+    length: number;
+    caught_by: string;
+    date: string;
+    lake: string;
+  } | null;
+  most_popular_species: Array<{
+    species: string;
+    catch_count: number;
+    percentage: number;
+  }>;
+  most_active_lakes: Array<{
+    lake_id: string;
+    catch_count: number;
+    unique_anglers: number;
+  }>;
+  recent_activity: {
+    catches_last_24h: number;
+    catches_last_7d: number;
+    catches_last_30d: number;
+    new_users_last_30d: number;
+  };
+};
+
 export type UpdateUserProfile = {
   first_name?: string;
   last_name?: string;

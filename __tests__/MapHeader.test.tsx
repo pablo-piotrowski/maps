@@ -51,6 +51,7 @@ describe('MapHeader', () => {
     const store = createMockStore({ isAuthenticated: false });
     renderWithProviders(<MapHeader />, store);
 
+    expect(screen.getByText('Statystyki platformy')).toBeInTheDocument();
     expect(screen.getByText('Zaloguj się')).toBeInTheDocument();
     expect(screen.getByText('Zarejestruj się')).toBeInTheDocument();
     expect(screen.queryByText('Wyloguj')).not.toBeInTheDocument();
@@ -74,7 +75,8 @@ describe('MapHeader', () => {
     renderWithProviders(<MapHeader />, store);
 
     expect(screen.getByText('Witaj, testuser!')).toBeInTheDocument();
-    expect(screen.getByText('Statystyki')).toBeInTheDocument();
+    expect(screen.getByText('Moje statystyki')).toBeInTheDocument();
+    expect(screen.getByText('Globalne statystyki')).toBeInTheDocument();
     expect(screen.getByText('Wyloguj')).toBeInTheDocument();
     expect(screen.queryByText('Zaloguj się')).not.toBeInTheDocument();
   });

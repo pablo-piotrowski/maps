@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function LoginPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [isLoading, isAuthenticated, router]);
 
@@ -53,16 +53,16 @@ export default function LoginPage() {
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = "Adres email jest wymagany";
+      newErrors.email = 'Adres email jest wymagany';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Adres email jest nieprawidłowy";
+      newErrors.email = 'Adres email jest nieprawidłowy';
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "Hasło jest wymagane";
+      newErrors.password = 'Hasło jest wymagane';
     } else if (formData.password.length < 6) {
-      newErrors.password = "Hasło musi mieć co najmniej 6 znaków";
+      newErrors.password = 'Hasło musi mieć co najmniej 6 znaków';
     }
 
     setErrors(newErrors);
@@ -83,11 +83,11 @@ export default function LoginPage() {
 
       if (success) {
         // Redirect to map page
-        router.push("/");
+        router.push('/');
       }
       // Error handling is now done in useEffect when error state changes
     } catch {
-      setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
+      setErrors({ general: 'Coś poszło nie tak. Spróbuj ponownie.' });
     }
   };
 
@@ -101,7 +101,7 @@ export default function LoginPage() {
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: '',
       }));
     }
   };
@@ -114,7 +114,7 @@ export default function LoginPage() {
             Zaloguj się do swojego konta
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Lub{" "}
+            Lub{' '}
             <Link
               href="/register"
               className="font-medium text-blue-600 hover:text-blue-500"
@@ -134,13 +134,12 @@ export default function LoginPage() {
                 Adres email
               </label>
               <input
-                id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.email ? "border-red-300" : "border-gray-300"
+                  errors.email ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Wprowadź swój email"
                 value={formData.email}
@@ -159,13 +158,12 @@ export default function LoginPage() {
                 Hasło
               </label>
               <input
-                id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.password ? "border-red-300" : "border-gray-300"
+                  errors.password ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Wprowadź swoje hasło"
                 value={formData.password}
@@ -189,8 +187,8 @@ export default function LoginPage() {
               disabled={isLoading}
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
                 isLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             >
               {isLoading ? (
@@ -200,6 +198,8 @@ export default function LoginPage() {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
+                    role="img"
+                    aria-label="Ładowanie"
                   >
                     <circle
                       className="opacity-25"
@@ -218,7 +218,7 @@ export default function LoginPage() {
                   Logowanie...
                 </>
               ) : (
-                "Zaloguj się"
+                'Zaloguj się'
               )}
             </button>
           </div>
