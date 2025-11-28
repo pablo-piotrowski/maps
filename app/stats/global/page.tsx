@@ -1,7 +1,7 @@
 'use client';
 
-import GlobalStats from '@/components/global-stats';
-import MapHeader from '@/components/map-header';
+import GlobalStats from '@/components/features/stats/global-stats';
+import MapHeader from '@/components/layout/map-header';
 import Link from 'next/link';
 import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
 

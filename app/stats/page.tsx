@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
-import MapHeader from '@/components/map-header';
-import StatsSkeleton from '@/components/stats-skeleton';
+import MapHeader from '@/components/layout/map-header';
+import StatsSkeleton from '@/components/ui/stats-skeleton';
 import type { UserStats } from '@/types/user';
 
 // Reusable components

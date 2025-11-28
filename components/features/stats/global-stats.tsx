@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import StatsSkeleton from './stats-skeleton';
+import StatsSkeleton from '../../ui/stats-skeleton';
 import type { PlatformStats } from '@/types/user';
 
 export default function GlobalStats() {

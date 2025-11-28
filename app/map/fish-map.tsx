@@ -11,7 +11,7 @@ import MapComponent, {
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { INITIAL_VIEW_STATE } from './mapconfig';
 import type { MapMouseEvent } from 'mapbox-gl';
-import LakeDrawer from './components/lake-drawer';
+import LakeDrawer from '@/components/features/map/lake-drawer';
 import { useFishCatches } from './hooks/useFishCatches';
 import { useFishCatchForm } from './hooks/useFishCatchForm';
 // import { useLakeDrawer } from './hooks/useLakeDrawer'; // Zastąpione globalnym stanem Redux

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import MapHeader from '../components/map-header';
+import MapHeader from '../components/layout/map-header';
 import authReducer from '../lib/store/authSlice';
 
 // Mock next/navigation
