@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useReduxAuth } from "@/lib/hooks/useReduxAuth";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useReduxAuth } from '@/lib/hooks/useReduxAuth';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function RegisterPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [isLoading, isAuthenticated, router]);
 
@@ -55,38 +55,38 @@ export default function RegisterPage() {
 
     // Username validation
     if (!formData.username) {
-      newErrors.username = "Nazwa użytkownika jest wymagana";
+      newErrors.username = 'Nazwa użytkownika jest wymagana';
     } else if (formData.username.length < 3) {
-      newErrors.username = "Nazwa użytkownika musi mieć co najmniej 3 znaki";
+      newErrors.username = 'Nazwa użytkownika musi mieć co najmniej 3 znaki';
     } else if (formData.username.length > 50) {
-      newErrors.username = "Nazwa użytkownika musi mieć mniej niż 50 znaków";
+      newErrors.username = 'Nazwa użytkownika musi mieć mniej niż 50 znaków';
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
       newErrors.username =
-        "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia";
+        'Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia';
     }
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = "Adres email jest wymagany";
+      newErrors.email = 'Adres email jest wymagany';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Adres email jest nieprawidłowy";
+      newErrors.email = 'Adres email jest nieprawidłowy';
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "Hasło jest wymagane";
+      newErrors.password = 'Hasło jest wymagane';
     } else if (formData.password.length < 6) {
-      newErrors.password = "Hasło musi mieć co najmniej 6 znaków";
+      newErrors.password = 'Hasło musi mieć co najmniej 6 znaków';
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
       newErrors.password =
-        "Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę i jedną cyfrę";
+        'Hasło musi zawierać co najmniej jedną wielką literę, jedną małą literę i jedną cyfrę';
     }
 
     // Confirm password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Potwierdź swoje hasło";
+      newErrors.confirmPassword = 'Potwierdź swoje hasło';
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Hasła nie są identyczne";
+      newErrors.confirmPassword = 'Hasła nie są identyczne';
     }
 
     setErrors(newErrors);
@@ -111,11 +111,11 @@ export default function RegisterPage() {
 
       if (success) {
         // Redirect to map page
-        router.push("/");
+        router.push('/');
       }
       // Error handling is now done in useEffect when error state changes
     } catch {
-      setErrors({ general: "Coś poszło nie tak. Spróbuj ponownie." });
+      setErrors({ general: 'Coś poszło nie tak. Spróbuj ponownie.' });
     }
   };
 
@@ -129,20 +129,20 @@ export default function RegisterPage() {
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: '',
       }));
     }
   };
 
   return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Utwórz swoje konto
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Lub{" "}
+            Lub{' '}
             <Link
               href="/login"
               className="font-medium text-blue-600 hover:text-blue-500"
@@ -168,7 +168,7 @@ export default function RegisterPage() {
                 autoComplete="username"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.username ? "border-red-300" : "border-gray-300"
+                  errors.username ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Wybierz nazwę użytkownika"
                 value={formData.username}
@@ -193,7 +193,7 @@ export default function RegisterPage() {
                 autoComplete="email"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.email ? "border-red-300" : "border-gray-300"
+                  errors.email ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Wprowadź swój email"
                 value={formData.email}
@@ -218,7 +218,7 @@ export default function RegisterPage() {
                 autoComplete="new-password"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.password ? "border-red-300" : "border-gray-300"
+                  errors.password ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Utwórz hasło"
                 value={formData.password}
@@ -243,7 +243,7 @@ export default function RegisterPage() {
                 autoComplete="new-password"
                 required
                 className={`mt-1 appearance-none relative block w-full px-3 py-2 border ${
-                  errors.confirmPassword ? "border-red-300" : "border-gray-300"
+                  errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
                 placeholder="Potwierdź swoje hasło"
                 value={formData.confirmPassword}
@@ -269,8 +269,8 @@ export default function RegisterPage() {
               disabled={isLoading}
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
                 isLoading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             >
               {isLoading ? (
@@ -298,7 +298,7 @@ export default function RegisterPage() {
                   Tworzenie konta...
                 </>
               ) : (
-                "Utwórz konto"
+                'Utwórz konto'
               )}
             </button>
           </div>
